@@ -88,23 +88,7 @@ fun main() {
         Triple("😊a", "😊b", false)
     )
 
-    for ((index, test) in basicTestCases.withIndex()) {
-        val (s, t, expected) = test
-        val actual = isAnagram(s, t)
-        println("Test Case #$index")
-        println("Input: s = \"$s\", t = \"$t\"")
-        println("Expected: $expected, Actual: $actual")
-        println(if (expected == actual) "✅ Passed" else "❌ Failed")
-        println("----")
-    }
-
-    for ((index, test) in (basicTestCases + unicodeTestCases).withIndex()) {
-        val (s, t, expected) = test
-        val actual = isAnagramExtended(s, t)
-        println("Test Case #$index")
-        println("Input: s = \"$s\", t = \"$t\"")
-        println("Expected: $expected, Actual: $actual")
-        println(if (expected == actual) "✅ Passed" else "❌ Failed")
-        println("----")
-    }
+    validateSolution(basicTestCases, ::isAnagram)
+    printDivider()
+    validateSolution(basicTestCases + unicodeTestCases, ::isAnagramExtended)
 }

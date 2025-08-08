@@ -40,13 +40,5 @@ fun main() {
         Pair(intArrayOf(1000000000, -1000000000), false)
     )
 
-    for ((index, test) in testCases.withIndex()) {
-        val (nums, expected) = test
-        val actual = containsDuplicate(nums)
-        println("Test Case #$index")
-        println("Input: nums = ${nums.joinToString()}")
-        println("Expected: $expected, Actual: $actual")
-        println(if (expected == actual) "✅ Passed" else "❌ Failed")
-        println("----")
-    }
+    validateSolution(testCases, ::containsDuplicate)
 }

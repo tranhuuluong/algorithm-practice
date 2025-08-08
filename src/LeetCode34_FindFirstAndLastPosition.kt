@@ -107,24 +107,7 @@ fun main() {
         Triple(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 10, intArrayOf(9, 9)),
     )
 
-    for ((index, test) in testCases.withIndex()) {
-        val (nums, target, expected) = test
-        val actual = searchRange(nums, target)
-        println("Test Case #$index")
-        println("Input: nums = ${nums.joinToString()}, target = $target")
-        println("Expected: ${expected.joinToString()}, Actual: ${actual.joinToString()}")
-        println(if (expected.contentEquals(actual)) "✅ Passed" else "❌ Failed")
-        println("----")
-    }
-
-    println("------------------------------------------------")
-    for ((index, test) in testCases.withIndex()) {
-        val (nums, target, expected) = test
-        val actual = searchRangeBruteForce(nums, target)
-        println("Test Case #$index")
-        println("Input: nums = ${nums.joinToString()}, target = $target")
-        println("Expected: ${expected.joinToString()}, Actual: ${actual.joinToString()}")
-        println(if (expected.contentEquals(actual)) "✅ Passed" else "❌ Failed")
-        println("----")
-    }
+    validateSolution(testCases, ::searchRange)
+    printDivider()
+    validateSolution(testCases, ::searchRangeBruteForce)
 }
