@@ -1,3 +1,7 @@
+import model.Quadruple
+import model.Quintuple
+import kotlin.collections.withIndex
+
 fun Any?.prettyPrint(): String = when (this) {
     is IntArray -> this.joinToString(prefix = "[", postfix = "]")
     is LongArray -> this.joinToString(prefix = "[", postfix = "]")
@@ -63,6 +67,38 @@ fun <I1, I2, O> validateSolution(
         val actual = solution(input1, input2)
         println("Test Case #$index")
         println("Input: (${input1.prettyPrint()}, ${input2.prettyPrint()})")
+        println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println("----")
+    }
+}
+
+fun <I1, I2, I3, O> validateSolution(
+    testCases: List<Quadruple<I1, I2, I3, O>>,
+    solution: (I1, I2, I3) -> O,
+    comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
+) {
+    for ((index, test) in testCases.withIndex()) {
+        val (i1, i2, i3, expected) = test
+        val actual = solution(i1, i2, i3)
+        println("Test Case #$index")
+        println("Input: (${i1.prettyPrint()}, ${i2.prettyPrint()}, ${i3.prettyPrint()})")
+        println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println("----")
+    }
+}
+
+fun <I1, I2, I3, I4, O> validateSolution(
+    testCases: List<Quintuple<I1, I2, I3, I4, O>>,
+    solution: (I1, I2, I3, I4) -> O,
+    comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
+) {
+    for ((index, test) in testCases.withIndex()) {
+        val (i1, i2, i3, i4, expected) = test
+        val actual = solution(i1, i2, i3, i4)
+        println("Test Case #$index")
+        println("Input: (${i1.prettyPrint()}, ${i2.prettyPrint()}, ${i3.prettyPrint()}, ${i4.prettyPrint()})")
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
         println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
         println("----")
