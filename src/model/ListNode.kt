@@ -6,7 +6,7 @@ data class ListNode(var value: Int, var next: ListNode? = null) {
         var cur: ListNode? = this
         return buildString {
             while (cur != null) {
-                append(value)
+                append(cur.value)
                 if (cur.next != null) {
                     append(" -> ")
                 }
