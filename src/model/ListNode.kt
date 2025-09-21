@@ -1,19 +1,52 @@
 package model
 
-data class ListNode(var value: Int, var next: ListNode? = null) {
+class ListNode(var value: Int, var next: ListNode? = null) {
 
     override fun toString(): String {
+        val visitedNodes = mutableSetOf<ListNode>()
         var cur: ListNode? = this
+
+        // Detecting cycle while building the string representation
         return buildString {
             while (cur != null) {
+                if (visitedNodes.contains(cur)) {
+                    append("Cycle detected at index ${visitedNodes.indexOf(cur)}")
+                    break
+                }
+
+                visitedNodes.add(cur)
                 append(cur.value)
-                if (cur.next != null) {
+
+                cur = cur.next
+                if (cur != null) {
                     append(" -> ")
                 }
-                cur = cur.next
             }
         }
     }
+
+    fun last(): ListNode? {
+        var result: ListNode? = this
+        while (result?.next != null) {
+            result = result.next
+        }
+        return result
+    }
+
+    operator fun get(pos: Int): ListNode? {
+        var result: ListNode? = this
+        repeat(pos) {
+            result = result?.next
+        }
+        return result
+    }
+}
+
+fun List<Int>.toCycleListNode(pos: Int): ListNode? {
+    if (isEmpty()) return null
+    val nodes = toListNode()
+    nodes?.last()?.next = nodes[pos]
+    return nodes
 }
 
 fun List<Int>.toListNode(): ListNode? {
