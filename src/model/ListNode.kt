@@ -40,6 +40,11 @@ class ListNode(var value: Int, var next: ListNode? = null) {
         }
         return result
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is ListNode) return false
+        return other.toString() == this.toString()
+    }
 }
 
 fun List<Int>.toCycleListNode(pos: Int): ListNode? {
