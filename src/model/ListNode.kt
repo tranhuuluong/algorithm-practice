@@ -40,16 +40,13 @@ class ListNode(var value: Int, var next: ListNode? = null) {
         }
         return result
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is ListNode) return false
-        return other.toString() == this.toString()
-    }
 }
 
 fun List<Int>.toCycleListNode(pos: Int): ListNode? {
     if (isEmpty()) return null
     val nodes = toListNode()
+    if (pos < 0) return nodes
+
     nodes?.last()?.next = nodes[pos]
     return nodes
 }
