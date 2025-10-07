@@ -1,3 +1,4 @@
+import model.ListNode
 import model.Quadruple
 import model.Quintuple
 import kotlin.collections.withIndex
@@ -22,6 +23,7 @@ fun isEqual(a: Any?, b: Any?): Boolean {
         a is CharArray && b is CharArray -> a contentEquals b
         a is BooleanArray && b is BooleanArray -> a contentEquals b
         a is Array<*> && b is Array<*> -> a contentDeepEquals b
+        a is ListNode && b is ListNode -> a.toString() == b.toString()
         else -> a == b
     }
 }
