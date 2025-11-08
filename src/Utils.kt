@@ -57,6 +57,11 @@ fun <I, O> validateSolution(
         println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
         println("----")
     }
+    printConslution {
+        testCases.all { (input, expected) ->
+            comparator(expected, solution(input))
+        }
+    }
 }
 
 fun <I1, I2, O> validateSolution(
@@ -72,6 +77,11 @@ fun <I1, I2, O> validateSolution(
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
         println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
         println("----")
+    }
+    printConslution {
+        testCases.all { (input1, input2, expected) ->
+            comparator(expected, solution(input1, input2))
+        }
     }
 }
 
@@ -89,6 +99,11 @@ fun <I1, I2, I3, O> validateSolution(
         println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
         println("----")
     }
+    printConslution {
+        testCases.all { (i1, i2, i3, expected) ->
+            comparator(expected, solution(i1, i2, i3))
+        }
+    }
 }
 
 fun <I1, I2, I3, I4, O> validateSolution(
@@ -104,5 +119,22 @@ fun <I1, I2, I3, I4, O> validateSolution(
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
         println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
         println("----")
+    }
+    printConslution {
+        testCases.all { (i1, i2, i3, i4, expected) ->
+            comparator(expected, solution(i1, i2, i3, i4))
+        }
+    }
+}
+
+private fun printConslution(accepted: () -> Boolean) {
+    val green = "\u001B[32m"
+    val red = "\u001B[31m"
+    val reset = "\u001B[0m"
+
+    if (accepted()) {
+        println("${green}✅ Accepted$reset")
+    } else {
+        println("${red}❌ Wrong Answer$reset")
     }
 }
