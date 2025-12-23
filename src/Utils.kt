@@ -48,20 +48,17 @@ fun <I, O> validateSolution(
     solution: (I) -> O,
     comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
 ) {
+    var hasAnyError = false
     for ((index, test) in testCases.withIndex()) {
         val (input, expected) = test
         val actual = solution(input)
         println("Test Case #$index")
         println("Input: ${input.prettyPrint()}")
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
-        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed".also { hasAnyError = true })
         println("----")
     }
-    printConslution {
-        testCases.all { (input, expected) ->
-            comparator(expected, solution(input))
-        }
-    }
+    printConslution(!hasAnyError)
 }
 
 fun <I1, I2, O> validateSolution(
@@ -69,20 +66,17 @@ fun <I1, I2, O> validateSolution(
     solution: (I1, I2) -> O,
     comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
 ) {
+    var hasAnyError = false
     for ((index, test) in testCases.withIndex()) {
         val (input1, input2, expected) = test
         val actual = solution(input1, input2)
         println("Test Case #$index")
         println("Input: (${input1.prettyPrint()}, ${input2.prettyPrint()})")
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
-        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed".also { hasAnyError = true })
         println("----")
     }
-    printConslution {
-        testCases.all { (input1, input2, expected) ->
-            comparator(expected, solution(input1, input2))
-        }
-    }
+    printConslution(!hasAnyError)
 }
 
 fun <I1, I2, I3, O> validateSolution(
@@ -90,20 +84,17 @@ fun <I1, I2, I3, O> validateSolution(
     solution: (I1, I2, I3) -> O,
     comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
 ) {
+    var hasAnyError = false
     for ((index, test) in testCases.withIndex()) {
         val (i1, i2, i3, expected) = test
         val actual = solution(i1, i2, i3)
         println("Test Case #$index")
         println("Input: (${i1.prettyPrint()}, ${i2.prettyPrint()}, ${i3.prettyPrint()})")
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
-        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed".also { hasAnyError = true })
         println("----")
     }
-    printConslution {
-        testCases.all { (i1, i2, i3, expected) ->
-            comparator(expected, solution(i1, i2, i3))
-        }
-    }
+    printConslution(!hasAnyError)
 }
 
 fun <I1, I2, I3, I4, O> validateSolution(
@@ -111,28 +102,25 @@ fun <I1, I2, I3, I4, O> validateSolution(
     solution: (I1, I2, I3, I4) -> O,
     comparator: (O, O) -> Boolean = { expected, actual -> isEqual(expected, actual) },
 ) {
+    var hasAnyError = false
     for ((index, test) in testCases.withIndex()) {
         val (i1, i2, i3, i4, expected) = test
         val actual = solution(i1, i2, i3, i4)
         println("Test Case #$index")
         println("Input: (${i1.prettyPrint()}, ${i2.prettyPrint()}, ${i3.prettyPrint()}, ${i4.prettyPrint()})")
         println("Expected: ${expected.prettyPrint()}, Actual: ${actual.prettyPrint()}")
-        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed")
+        println(if (comparator(expected, actual)) "✅ Passed" else "❌ Failed".also { hasAnyError = true })
         println("----")
     }
-    printConslution {
-        testCases.all { (i1, i2, i3, i4, expected) ->
-            comparator(expected, solution(i1, i2, i3, i4))
-        }
-    }
+    printConslution(!hasAnyError)
 }
 
-private fun printConslution(accepted: () -> Boolean) {
+private fun printConslution(accepted: Boolean) {
     val green = "\u001B[32m"
     val red = "\u001B[31m"
     val reset = "\u001B[0m"
 
-    if (accepted()) {
+    if (accepted) {
         println("${green}✅ Accepted$reset")
     } else {
         println("${red}❌ Wrong Answer$reset")
