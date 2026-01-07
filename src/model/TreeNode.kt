@@ -7,28 +7,43 @@ class TreeNode(
 )
 
 fun List<Int?>.toTreeNode(): TreeNode? {
-    if (this.isEmpty() || this[0] == null) return null
-
-    // Helper function to insert nodes recursively based on index
-    fun insertLevelOrder(index: Int): TreeNode? {
-        // 1. Base case for index out of bounds
-        if (index >= this.size) return null
-
-        val value = this[index]
-
-        // 2. Base case for null placeholder
-        if (value == null) return null
-
-        val node = TreeNode(value)
-
-        // The left child is always at (2 * index + 1)
-        node.left = insertLevelOrder(2 * index + 1)
-
-        // The right child is always at (2 * index + 2)
-        node.right = insertLevelOrder(2 * index + 2)
-
-        return node
+    if (this.isEmpty() || this[0] == null) {
+        return null
     }
 
-    return insertLevelOrder(0)
+    // Use 'value' field as defined in your class
+    val root = TreeNode(this[0]!!)
+
+    // Queue holds the nodes whose children we are about to attach.
+    val queue: java.util.Queue<TreeNode> = java.util.LinkedList()
+    queue.offer(root)
+
+    var i = 1
+
+    // Process the list sequentially, creating left and right children for the node at the front of the queue.
+    while (i < this.size && queue.isNotEmpty()) {
+        val parent = queue.poll()
+
+        // --- Left Child (at list index i) ---
+        val leftVal = this[i]
+        if (leftVal != null) {
+            val leftNode = TreeNode(leftVal)
+            parent.left = leftNode
+            queue.offer(leftNode) // Add the new node to the queue to process its children next
+        }
+        i++
+
+        // --- Right Child (at list index i) ---
+        if (i < this.size) {
+            val rightVal = this[i]
+            if (rightVal != null) {
+                val rightNode = TreeNode(rightVal)
+                parent.right = rightNode
+                queue.offer(rightNode) // Add the new node to the queue
+            }
+            i++
+        }
+    }
+
+    return root
 }
